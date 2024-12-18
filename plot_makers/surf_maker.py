@@ -30,4 +30,8 @@ class surf_maker(plt_maker):
 
     def save_animated_plot(self):
         ani = animation.FuncAnimation(self.__fig, self._change_plot, self._frn, interval=1000 / self._fps)
+        writer = animation.PillowWriter(fps=self._fps,
+                                        metadata=dict(artist='Me'),
+                                        bitrate=1800)
+        ani.save('surface.gif', writer=writer)
         plt.show()
