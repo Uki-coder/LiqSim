@@ -22,22 +22,18 @@ class liq:
     @property
     def vel_x(self):
         return self.__vel_x
+
     @property
     def vel_y(self):
         return self.__vel_y
+
     @property
     def ro(self):
         return self.__ro
+
     @property
     def pres(self):
         return self.__pres
-
-    @ntime.setter ##ask
-    def time_set(self, t):
-        if isinstance(t, np.float64):
-            self.__ntime = t
-        else: raise TypeError('Wrong type of ntime')
-
 
     @property
     def vel_y_value(self):
