@@ -39,13 +39,18 @@ class plt_maker(abc.ABC):
             raise TypeError(name + ' is wong type. Must be '\
                             + str(type))
 
+    def _check_tlim(self, obj):
+        self._check_shape(obj, 'tlim')
+        if (obj[1] < obj[0]):
+            raise ValueError('tlim has wrong values')
+
     @abc.abstractmethod
     def _change_plot(self, frame): pass
 
     @abc.abstractmethod
     def save_animated_plot(self): pass
 
-    '''
     @abc.abstractmethod
     def save_static_plot(self, time_moment): pass
-    '''
+
+    def __del__(self): pass

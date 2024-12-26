@@ -26,12 +26,18 @@ class surf_maker(plt_maker):
 
     def _change_plot(self, frame):
         self.__plot[0].remove()
-        self.__plot[0] = self.__ax.plot_surface(self._x, self._y, self.__zvalues[:, :, frame], cmap="afmhot_r")
+        self.__plot[0] = self.__ax.plot_surface(self._x, self._y, self.__zvalues[:, :, frame], cmap="ocean")
 
     def save_animated_plot(self):
-        ani = animation.FuncAnimation(self.__fig, self._change_plot, self._frn, interval=1000 / self._fps)
+        ani = animation.FuncAnimation(self.__fig, self._change_plot, self._frn, interval=1 / self._fps)
         writer = animation.PillowWriter(fps=self._fps,
                                         metadata=dict(artist='Me'),
                                         bitrate=1800)
         ani.save('surface.gif', writer=writer)
-        plt.show()
+
+    def save_static_plot(self, time_moment):
+        self.__fig, self.__ax = plt.subplots()
+        self.__ax.contourf(self._x, self._y, self.__zvalues[:, :, int(time_moment * self._frn / (self._tlim[1] - self._tlim[0]))], cmap="ocean")
+        plt.savefig('surface.png', dpi=600)
+
+    def __del__(self): pass
