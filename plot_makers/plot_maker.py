@@ -21,8 +21,8 @@ class plt_maker(abc.ABC):
         self._xlim = xlim
         self._ylim = ylim
 
-        self._x = np.linspace(xlim[0], xlim[1], self._mesh_grids_num + 1)
-        self._y = np.linspace(ylim[0], ylim[1], self._mesh_grids_num + 1)
+        self._x = np.linspace(xlim[0], xlim[1], self._mesh_grids_num)
+        self._y = np.linspace(ylim[0], ylim[1], self._mesh_grids_num)
         self._t = np.linspace(self._tlim[0], self._tlim[1], self._frn)
 
 
