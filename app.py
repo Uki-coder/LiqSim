@@ -8,21 +8,19 @@ class CustomError(Exception):
 
 root = tk.Tk()
 root.title("setting initial conditions")
-root.minsize(1020, 500)
-root.geometry("1020x500+450+50")
-tk.Label(root, text ='Setting initial conditions and processing', font=("Comic Sans", 21, "bold")).pack()
+root.minsize(800, 450)
+root.geometry("800x450+450+50")
+tk.Label(root, text ='Setting initial conditions and processing', font=("Comic Sans", 10, "bold")).pack()
 #making frame for setting numerical values
 frame = tk.Frame(root, width=530, height=320)
 frame.configure(background="grey")
-tk.Label(frame, text ='Setting numeric values', bg="grey", font=("Comic Sans", 10, "bold")).place(x=180, y=5)
+tk.Label(frame, text ='Setting numeric values', bg="grey", font=("Comic Sans", 8, "bold")).place(x=180, y=5)
 frame.place(x=15, y= 40)
 #making frame for processing settings
-frame2 = tk.Frame(root, width=450, height=320)
+frame2 = tk.Frame(root, width=225, height=320)
 frame2.configure(background="grey")
-tk.Label(frame2, text =' Processing setup', bg="grey", font=("Comic Sans", 10, "bold")).place(x=160, y=5)
+tk.Label(frame2, text =' Processing setup', bg="grey", font=("Comic Sans", 8, "bold")).place(x=20, y=5)
 frame2.place(x=550, y= 40)
-label = tk.Label(frame2, bg="grey", text="Selected: Plot without bathymetry")
-label.place(x=15, y=60)
 #making textfields and labels for setting boundary values and other numeric values
 tmin_lb = tk.Label(frame, text='t min [s]', bg="grey")
 tmin_lb.place(x=125, y=50)
@@ -96,45 +94,17 @@ g_lb.place(x=335, y=140)
 g_tf = tk.Entry(frame, width=10)
 g_tf.place(x=250, y=140)
 
-vsc_lb = tk.Label(frame, text='Viscosity coefficient [Pa*s]', bg="grey")
-vsc_lb.place(x=335, y=170)
-
-vsc_tf = tk.Entry(frame, width=10)
-vsc_tf.place(x=250, y=170)
-
-sl_lb = tk.Label(frame, text='Sea level [m]', bg="grey")
-sl_lb.place(x=335, y=200)
-
-sl_tf = tk.Entry(frame, width=10)
-sl_tf.place(x=250, y=200)
-
-dt_lb = tk.Label(frame, text='Dry tolerance [hz pokachto]', bg="grey")
-dt_lb.place(x=335, y=230)
-
-dt_tf = tk.Entry(frame, width=10)
-dt_tf.place(x=250, y=230)
 #making processing settings
+#setting static plot
 stt_lb = tk.Label(frame2, text='Exact time', bg="grey")
-stt_lb.place(x=100, y=180)
+stt_lb.place(x=100, y=120)
 stt_tf = tk.Entry(frame2, width=10)
-stt_tf.place(x=15, y=180)
-#choosing processing mode
-def sel():
-    if bath.get():
-        selection = "Selected: Plot with bathymetry"
-    else:
-        selection = "Selected: Plot without bathymetry"
-    label.config(text=selection)
-
-bath = tk.BooleanVar()
-b0 = tk.Radiobutton(frame2, text="Plot without bathymetry", variable=bath, value=False, command=sel, bg="grey")
-b0.place(x=15, y=90)
-b1 = tk.Radiobutton(frame2, text="Plot with bathymetry", variable=bath, value=True, command=sel, bg="grey")
-b1.place(x=15, y=120)
+stt_tf.place(x=15, y=120)
+#setting static quiver plot
 sttq_lb = tk.Label(frame2, text='Exact time', bg="grey")
-sttq_lb.place(x=100, y=270)
+sttq_lb.place(x=100, y=210)
 sttq_tf = tk.Entry(frame2, width=10)
-sttq_tf.place(x=15, y=270)
+sttq_tf.place(x=15, y=210)
 #saving static plot
 def stat():
     if stb.get():
@@ -149,7 +119,7 @@ stat = tk.Checkbutton(
     variable=stb,
     bg="grey",
 )
-stat.place(x=15, y=150)
+stat.place(x=15, y=90)
 
 #saving static quiver plot
 def statq():
@@ -166,7 +136,7 @@ statq = tk.Checkbutton(
     variable=stbq,
     bg="grey",
 )
-statq.place(x=15, y=240)
+statq.place(x=15, y=180)
 #quiver plot
 def quiv():
     if quivb.get():
@@ -182,11 +152,11 @@ quivcheck = tk.Checkbutton(
     variable=quivb,
     bg="grey",
 )
-quivcheck.place(x=15, y=210)
+quivcheck.place(x=15, y=150)
 
 #enable or disable output
 outpt_lb=tk.Label(frame2, text='Output disabled', bg="grey")
-outpt_lb.place(x=250,y=60)
+outpt_lb.place(x=45,y=60)
 def outpt():
     try:
         global outpt_lb
@@ -204,7 +174,7 @@ outptcheck = tk.Checkbutton(
     variable=outptb,
     bg="grey",
 )
-outptcheck.place(x=210, y=60)
+outptcheck.place(x=15, y=60)
 
 
 #defining functions that submit inserted values
@@ -273,10 +243,6 @@ def submit():
     nx = submit_valuei(Nx_tf.get(), 'Meshgrid number for x')
     ny = submit_valuei(Ny_tf.get(), 'Meshgrid number for y')
     g = submit_valuef(g_tf.get(), 'Gravitational accceleration')
-    if bath.get():
-        vsc = submit_valuef(vsc_tf.get(), 'Viscosity coefficient')
-        sl = submit_valuef(sl_tf.get(), 'Sea level')
-        dt = submit_valuef(dt_tf.get(), 'Dry tolerance')
     if stb.get():
         stat_time = submit_valuef(stt_tf.get(),'Exact time of static plot')
     if quivb.get():#use for future quiver animation
@@ -290,5 +256,5 @@ def submit():
 
 
 submit_button= tk.Button(root, text='submit', command = submit)
-submit_button.place(x=525, y=400)
+submit_button.place(x=345, y=400)
 root.mainloop()
