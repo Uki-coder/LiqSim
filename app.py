@@ -8,18 +8,18 @@ class CustomError(Exception):
 
 root = tk.Tk()
 root.title("setting initial conditions")
-root.minsize(800, 450)
-root.geometry("800x450+450+50")
+root.minsize(1020, 450)
+root.geometry("1020x450+450+50")
 tk.Label(root, text ='Setting initial conditions and processing', font=("Comic Sans", 10, "bold")).pack()
 #making frame for setting numerical values
 frame = tk.Frame(root, width=530, height=320)
 frame.configure(background="grey")
-tk.Label(frame, text ='Setting numeric values', bg="grey", font=("Comic Sans", 8, "bold")).place(x=180, y=5)
+tk.Label(frame, text ='Setting numeric values', bg="grey", font=("Comic Sans", 8, "bold")).place(x=150, y=5)
 frame.place(x=15, y= 40)
 #making frame for processing settings
-frame2 = tk.Frame(root, width=225, height=320)
+frame2 = tk.Frame(root, width=450, height=320)
 frame2.configure(background="grey")
-tk.Label(frame2, text =' Processing setup', bg="grey", font=("Comic Sans", 8, "bold")).place(x=20, y=5)
+tk.Label(frame2, text =' Processing setup', bg="grey", font=("Comic Sans", 8, "bold")).place(x=130, y=5)
 frame2.place(x=550, y= 40)
 #making textfields and labels for setting boundary values and other numeric values
 tmin_lb = tk.Label(frame, text='t min [s]', bg="grey")
@@ -93,6 +93,18 @@ g_lb.place(x=335, y=140)
 
 g_tf = tk.Entry(frame, width=10)
 g_tf.place(x=250, y=140)
+
+rho_lb = tk.Label(frame, text='Density of liquid [kg/m^3]', bg="grey")
+rho_lb.place(x=335, y=170)
+
+rho_tf = tk.Entry(frame, width=10)
+rho_tf.place(x=250, y=170)
+
+vsc_lb = tk.Label(frame, text='Viscosity of liquid [Pa*s]', bg="grey")
+vsc_lb.place(x=335, y=200)
+
+vsc_tf = tk.Entry(frame, width=10)
+vsc_tf.place(x=250, y=200)
 
 #making processing settings
 #setting static plot
@@ -189,8 +201,76 @@ wtrlvcheck = tk.Checkbutton(
     bg="grey",
 )
 wtrlvcheck.place(x=15, y=240)
+# making checkboxes for borders b-border
+#xmin 
+def bxmin():
+    if xminb.get():
+        xmincheck.configure(text='x=xmin: Wall')
+    else:
+        xmincheck.configure(text='x=xmin: Extrap')
 
 
+xminb = tk.BooleanVar()
+xmincheck = tk.Checkbutton(
+    frame2,
+    text="x=xmin: Extrap",
+    command=bxmin,
+    variable=xminb,
+    bg="grey",
+)
+xmincheck.place(x=250, y=60)
+#xmax
+def bxmax():
+    if xmaxb.get():
+        xmaxcheck.configure(text='x=xmax: Wall')
+    else:
+        xmaxcheck.configure(text='x=xmax: Extrap')
+
+
+xmaxb = tk.BooleanVar()
+xmaxcheck = tk.Checkbutton(
+    frame2,
+    text="x=xmax: Extrap",
+    command=bxmax,
+    variable=xmaxb,
+    bg="grey",
+)
+xmaxcheck.place(x=250, y=90)
+
+#ymin 
+def bymin():
+    if yminb.get():
+        ymincheck.configure(text='y=ymin: Wall')
+    else:
+        ymincheck.configure(text='y=ymin: Extrap')
+
+
+yminb = tk.BooleanVar()
+ymincheck = tk.Checkbutton(
+    frame2,
+    text="y=ymin: Extrap",
+    command=bymin,
+    variable=yminb,
+    bg="grey",
+)
+ymincheck.place(x=250, y=120)
+#ymax 
+def bymax():
+    if ymaxb.get():
+        ymaxcheck.configure(text='y=ymax: Wall')
+    else:
+        ymaxcheck.configure(text='y=ymax: Extrap')
+
+
+ymaxb = tk.BooleanVar()
+ymaxcheck = tk.Checkbutton(
+    frame2,
+    text="y=ymax: Extrap",
+    command=bymax,
+    variable=ymaxb,
+    bg="grey",
+)
+ymaxcheck.place(x=250, y=150)
 
 
 #defining functions that submit inserted values
@@ -276,6 +356,9 @@ def submit():
     nx = submit_valuei(Nx_tf.get(), 'Meshgrid number for x')
     ny = submit_valuei(Ny_tf.get(), 'Meshgrid number for y')
     g = submit_valuef(g_tf.get(), 'Gravitational accceleration')
+    rho = submit_valuef(rho_tf.get(), 'Density of liquid')
+    vsc = submit_valuef(vsc_tf.get(), 'Viscosity of liquid')
+
     if stb.get():
         stat_time = submit_valuef(stt_tf.get(),'Exact time of static plot')
     if quivb.get():#use for future quiver animation
@@ -287,11 +370,16 @@ def submit():
 
     if wtrlvb.get():
         pass 
+    #bool values for borders
+    xminbool=xminb.get()
+    xmaxbool=xmaxb.get()
+    yminbool=yminb.get()
+    ymaxbool=ymaxb.get()
 
 
 
 
 
 submit_button= tk.Button(root, text='submit', command = submit)
-submit_button.place(x=345, y=400)
+submit_button.place(x=450, y=400)
 root.mainloop()
