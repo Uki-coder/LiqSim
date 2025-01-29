@@ -239,18 +239,35 @@ def submit_valuei(value_s, value_lb):
             showerror(title="Error", message=f'Textfield {value_lb}  must be convertible to integer')
 
 def submit():
-    test_b=False #testing if file with initial conditions exists in work directory
+    test_a=False #testing if file with initial conditions exists in work directory
+    test_b=False
+    test_c=False
     try:
         init_test = open('uinit.py', 'r')
         init_test.close()
-        test_b=True
+        test_a=True
     except FileNotFoundError:
         showerror(title="Error", message='There is no file setting initial conditions in work directory')
-    if test_b:
+    if test_a:
         try:
             from uinit import init
+            test_b=True
         except ImportError:
             showerror(title="Error", message='There is no init function in initial conditions file')
+    if test_b:
+        try:
+            init(0,0)
+            test_c=True
+        except TypeError:
+            showerror(title="Error", message='Function from initial condition file must have 2 arguments')
+    if test_c:
+        try:
+            init(0,0)
+        except Exception:
+            showerror(title="Error", message='Something went wrong with function from initial condition file')
+    
+
+            TypeError
     tlim = submit_lim(tmin_tf.get(), tmax_tf.get(), 't min', 't max')
     xlim = submit_lim(xmin_tf.get(), xmax_tf.get(), 'x min', 'x max')
     ylim = submit_lim(ymin_tf.get(), ymax_tf.get(), 'y min', 'y max')
@@ -270,7 +287,6 @@ def submit():
 
     if wtrlvb.get():
         pass 
-
 
 
 
