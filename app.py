@@ -155,26 +155,42 @@ quivcheck = tk.Checkbutton(
 quivcheck.place(x=15, y=150)
 
 #enable or disable output
-outpt_lb=tk.Label(frame2, text='Output disabled', bg="grey")
-outpt_lb.place(x=45,y=60)
 def outpt():
-    try:
-        global outpt_lb
-        if outptb.get():
-            outpt_lb.configure(text='Output enabled')
-        else:
-            outpt_lb.configure(text='Output disbled')
-    except: NameError
+    if outptb.get():
+        outptcheck.configure(text='Output enabled')
+    else:
+        outptcheck.configure(text='Output disbled')
 
 
 outptb = tk.BooleanVar()
 outptcheck = tk.Checkbutton(
     frame2,
+    text="Output disabled",
     command=outpt,
     variable=outptb,
     bg="grey",
 )
 outptcheck.place(x=15, y=60)
+
+#checkbox for animated plot of water level
+def wtrlv():
+    if wtrlvb.get():
+        wtrlvcheck.configure(text="Animated plot for water level:Yes")
+    else:
+        wtrlvcheck.configure(text="Animated plot for water level:No")
+
+
+wtrlvb = tk.BooleanVar()
+wtrlvcheck = tk.Checkbutton(
+    frame2,
+    text="Animated plot for water level:No",
+    command=wtrlv,
+    variable=wtrlvb,
+    bg="grey",
+)
+wtrlvcheck.place(x=15, y=240)
+
+
 
 
 #defining functions that submit inserted values
@@ -192,7 +208,7 @@ def submit_lim(mins, maxs, min_lb, max_lb):
             maxv = float(maxs)
             showerror(title="Error", message=f'Minimal value {min_lb} must be greater than maximal value {max_lb}')
         except ValueError:
-            showerror(title="Error", message=f'Textfields {min_lb} and {max_lb} must be convertible to numbers')
+            showerror(title="Error", message=f'Textfields {min_lb} and {max_lb} must be convertible to float')
 
 def submit_valuef(value_s, value_lb):
     try:
@@ -249,6 +265,11 @@ def submit():
 
         if stbq.get():
             statq_time = submit_valuef(sttq_tf.get(), 'Exact time of static quiver plot')
+    if outptb.get():
+        pass 
+
+    if wtrlvb.get():
+        pass 
 
 
 
