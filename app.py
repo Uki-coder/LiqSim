@@ -94,18 +94,6 @@ g_lb.place(x=335, y=140)
 g_tf = tk.Entry(frame, width=10)
 g_tf.place(x=250, y=140)
 
-rho_lb = tk.Label(frame, text='Density of liquid [kg/m^3]', bg="grey")
-rho_lb.place(x=335, y=170)
-
-rho_tf = tk.Entry(frame, width=10)
-rho_tf.place(x=250, y=170)
-
-vsc_lb = tk.Label(frame, text='Viscosity of liquid [Pa*s]', bg="grey")
-vsc_lb.place(x=335, y=200)
-
-vsc_tf = tk.Entry(frame, width=10)
-vsc_tf.place(x=250, y=200)
-
 #making processing settings
 #setting static plot
 stt_lb = tk.Label(frame2, text='Exact time', bg="grey")
@@ -356,8 +344,6 @@ def submit():
     nx = submit_valuei(Nx_tf.get(), 'Meshgrid number for x')
     ny = submit_valuei(Ny_tf.get(), 'Meshgrid number for y')
     g = submit_valuef(g_tf.get(), 'Gravitational accceleration')
-    rho = submit_valuef(rho_tf.get(), 'Density of liquid')
-    vsc = submit_valuef(vsc_tf.get(), 'Viscosity of liquid')
 
     if stb.get():
         stat_time = submit_valuef(stt_tf.get(),'Exact time of static plot')
